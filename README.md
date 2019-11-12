@@ -19,3 +19,4 @@ otherwise, hammer it
 
 open > [Locust's UI](http://0.0.0.0:8089/)
 
+...later on `$ docker-compose scale web=4` and profit!
