@@ -11,19 +11,16 @@ SESSION_REDIS = redis
 app.config.from_object(__name__)
 Session(app)
 
-@app.route('/set/')
+@app.route('/', methods=["PUT"])
 def set():
     session['key'] = 'value'
     return 'ok'
 
-@app.route('/get/')
-def get():
-    return session.get('key', 'not set')
-
 @app.route('/')
-def hello():
+def get():
     count = redis.incr('hits')
-    return 'Hello World! I have been seen {} times.\n'.format(count)
+    value = session.get('key', 'not set')
+    return '({}) Hello World! I have been seen {} times.\n'.format(value, count)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
