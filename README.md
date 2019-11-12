@@ -1,3 +1,4 @@
+u better have a clean virtual env `$ virtualenv -p python3 .p3; source .p3/bin/activate`
 
  - start everything up
    -   `$ docker-compose up`
