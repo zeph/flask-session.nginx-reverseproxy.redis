@@ -1,4 +1,4 @@
-from flask import Flask, session
+from flask import Flask, session, jsonify
 from flask_session import Session
 from redis import Redis
 
@@ -14,13 +14,13 @@ Session(app)
 @app.route('/', methods=["PUT"])
 def set():
     session['key'] = 'value'
-    return 'ok'
+    return jsonify("ok"), 200
 
 @app.route('/')
 def get():
     count = redis.incr('hits')
     value = session.get('key', 'not set')
-    return '({}) Hello World! I have been seen {} times.\n'.format(value, count)
+    return jsonify({'value':value, 'count': 'Hello World! I have been seen {} times.'.format(count)}), 200
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
