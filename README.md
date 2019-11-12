@@ -21,3 +21,7 @@ otherwise, hammer it
 open > [Locust's UI](http://0.0.0.0:8089/)
 
 ...later on `$ docker-compose scale web=4` and profit!
+
+kill a random instance with `$ docker stop flask-sessionnginx-reverseproxyredis_web_1`
+
+...or bring it back with `scale`, all seems perfectly smooth and error-free (while under LOAD!!!)
