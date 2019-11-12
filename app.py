@@ -4,10 +4,10 @@ from redis import Redis
 
 app = Flask(__name__)
 redis = Redis(host='redis', port=6379)
+SESSION_REDIS = redis # passing the above obj
 
 # Check Configuration section for more details
 SESSION_TYPE = 'redis'
-SESSION_REDIS = redis
 app.config.from_object(__name__)
 Session(app)
 
