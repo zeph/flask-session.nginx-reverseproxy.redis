@@ -1,13 +1,20 @@
-from flask import Flask
-from redis import Redis
+from flask import Flask, session
+from flask_session import Session
 
 app = Flask(__name__)
-redis = Redis(host='redis', port=6379)
+# Check Configuration section for more details
+SESSION_TYPE = 'redis'
+app.config.from_object(__name__)
+Session(app)
 
-@app.route('/')
-def hello():
-    count = redis.incr('hits')
-    return 'Hello World! I have been seen {} times.\n'.format(count)
+@app.route('/set/')
+def set():
+    session['key'] = 'value'
+    return 'ok'
+
+@app.route('/get/')
+def get():
+    return session.get('key', 'not set')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)
