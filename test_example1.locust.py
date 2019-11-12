@@ -4,9 +4,11 @@ class UserBehavior(TaskSet):
     def on_start(self):
         """ ok, we do NOT have a session """
         with self.client.get("/", catch_response=True, name='not set') as response:
-            print(response.content)
+            #print(response.content)
             if response.status_code != 401:
                 response.failure("Got wrong response")
+            else:
+                response.success()
         self.start_session()
 
     def start_session(self):
