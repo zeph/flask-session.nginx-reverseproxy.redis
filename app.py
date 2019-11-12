@@ -14,13 +14,14 @@ Session(app)
 @app.route('/', methods=["PUT"])
 def set():
     session['key'] = 'value'
-    return jsonify("ok"), 200
+    return jsonify("ok"), 201
 
 @app.route('/')
 def get():
     count = redis.incr('hits')
     value = session.get('key', 'not set')
-    return jsonify({'value':value, 'count': 'Hello World! I have been seen {} times.'.format(count)}), 200
+    http_code = 401 if value == 'not set' else 200
+    return jsonify({'value':value, 'count': 'Hello World! I have been seen {} times.'.format(count)}), http_code
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", debug=True)

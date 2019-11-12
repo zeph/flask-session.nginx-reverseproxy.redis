@@ -3,15 +3,22 @@ from locust import HttpLocust, TaskSet, task
 class UserBehavior(TaskSet):
     def on_start(self):
         """ ok, we do NOT have a session """
-        self.client.get("/")
+        with self.client.get("/", catch_response=True, name='not set') as response:
+            print(response.content)
+            if response.status_code != 401:
+                response.failure("Got wrong response")
         self.start_session()
 
     def start_session(self):
-        self.client.put("/")
+        with self.client.put("/", catch_response=True) as response:
+            if response.status_code != 201:
+                response.failure("Got wrong response")
 
     @task(1)
     def index(self):
-        self.client.get("/")
+        with self.client.get("/", catch_response=True) as response:
+            if response.status_code != 200:
+                response.failure("Got wrong response")
 
 class WebsiteUser(HttpLocust):
     task_set = UserBehavior
