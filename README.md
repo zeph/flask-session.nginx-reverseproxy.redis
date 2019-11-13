@@ -1,5 +1,5 @@
 # flask-session, nginx-reverseproxy, (redis)
-## being able to test locally (on a laptop) nginx's loadbalancing configurations
+## being able to test locally (on a laptop) nginx's LB confs
 
-credits to me/`GMS`/Zeph/`polena28`/guido.maria.serra/`zeph1ro` and all the Authors of the links I copy&pasted in the `CREDITS` file
+by me (Zeph/`polena28`/guido.maria.serra/`GMS`/zeph1ro) and all the Authors in the `CREDITS` file
 
