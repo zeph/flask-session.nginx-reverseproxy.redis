@@ -1,8 +1,7 @@
 from flask import Flask, session, jsonify
-from flask_session import Session
 
 app = Flask(__name__)
-Session(app)
+app.secret_key = b'<forgive me!>'
 
 @app.route('/', methods=["PUT"])
 def set():

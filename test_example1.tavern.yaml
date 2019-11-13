@@ -43,8 +43,6 @@ stages:
     # ...and the expected response code and body
     response:
       status_code: 200
-      cookies:
-        - session
       body:
         "value": "value"
   
