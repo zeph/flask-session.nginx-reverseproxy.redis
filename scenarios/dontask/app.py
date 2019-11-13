@@ -1,9 +1,13 @@
 from flask import Flask, session, jsonify
+from flask_session import Session
 import os
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
 print('secret_key', app.secret_key)
+
+#SESSION_COOKIE_PATH = 'not the one'
+app.config.from_object(__name__)
 
 @app.route('/', methods=["PUT"])
 def set():
