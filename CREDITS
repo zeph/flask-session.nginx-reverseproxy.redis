@@ -7,3 +7,5 @@ https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instanc
 https://serverfault.com/questions/240476/how-to-force-nginx-to-resolve-dns-of-a-dynamic-hostname-everytime-when-doing-p/593003#593003
 http://nginx.org/en/docs/http/ngx_http_upstream_module.html#sticky
 https://stackoverflow.com/questions/46629643/jsessionid-cookie-has-node0-postfix-while-the-server-side-sessionid-doesnt
+https://docs.spring.io/spring-session/docs/current/reference/html5/
+https://github.com/spring-projects/spring-session/tree/2.2.0.RELEASE/spring-session-samples/spring-session-sample-javaconfig-rest
