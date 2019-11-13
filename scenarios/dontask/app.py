@@ -1,7 +1,9 @@
 from flask import Flask, session, jsonify
+import os
 
 app = Flask(__name__)
-app.secret_key = b'<forgive me!>'
+app.secret_key = os.urandom(16)
+print('secret_key', app.secret_key)
 
 @app.route('/', methods=["PUT"])
 def set():
