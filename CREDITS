@@ -5,3 +5,4 @@ https://tavern.readthedocs.io/en/latest/examples.html#testing-a-simple-server
 https://docs.locust.io/en/stable/quickstart.html#start-locust
 https://pspdfkit.com/blog/2018/how-to-use-docker-compose-to-run-multiple-instances-of-a-service-in-development/
 https://serverfault.com/questions/240476/how-to-force-nginx-to-resolve-dns-of-a-dynamic-hostname-everytime-when-doing-p/593003#593003
+http://nginx.org/en/docs/http/ngx_http_upstream_module.html#sticky
