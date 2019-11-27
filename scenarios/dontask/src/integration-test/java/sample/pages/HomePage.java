@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 the original author or authors.
+ * Copyright 2014-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,48 +16,124 @@
 
 package sample.pages;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Cookie;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.pagefactory.DefaultElementLocatorFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
  * @author Eddú Meléndez
+ * @author Rob Winch
  */
-public class HomePage extends BasePage {
+public class HomePage {
+
+	private WebDriver driver;
+
+	@FindBy(css = "form")
+	WebElement form;
+
+	@FindBy(css = "table tbody tr")
+	List<WebElement> trs;
+
+	List<Attribute> attributes;
 
 	public HomePage(WebDriver driver) {
-		super(driver);
+		this.driver = driver;
+		this.attributes = new ArrayList<>();
 	}
 
-	public static LoginPage go(WebDriver driver) {
+	private static void get(WebDriver driver, String get) {
+		String baseUrl = "http://localhost:" + System.getProperty("app.port", "8080");
+		driver.get(baseUrl + get);
+	}
+
+	public static HomePage go(WebDriver driver) {
 		get(driver, "/");
-		return PageFactory.initElements(driver, LoginPage.class);
+		return PageFactory.initElements(driver, HomePage.class);
 	}
 
 	public void assertAt() {
-		assertThat(getDriver().getTitle()).isEqualTo("Spring Session Sample - Secured Content");
+		assertThat(this.driver.getTitle()).isEqualTo("Session Attributes");
 	}
 
-	public void containCookie(String cookieName) {
-		Set<Cookie> cookies = getDriver().manage().getCookies();
-		assertThat(cookies).extracting("name").contains(cookieName);
+	public List<Attribute> attributes() {
+		List<Attribute> rows = new ArrayList<>();
+		for (WebElement tr : this.trs) {
+			rows.add(new Attribute(tr));
+		}
+		this.attributes.addAll(rows);
+		return this.attributes;
 	}
 
-	public void doesNotContainCookie(String cookieName) {
-		Set<Cookie> cookies = getDriver().manage().getCookies();
-		assertThat(cookies).extracting("name").doesNotContain(cookieName);
+	public Form form() {
+		return new Form(this.form);
 	}
 
-	public LoginPage logout() {
-		WebElement logout = getDriver().findElement(By.cssSelector("input[type=\"submit\"]"));
-		logout.click();
-		return PageFactory.initElements(getDriver(), LoginPage.class);
+	public class Form {
+
+		@FindBy(name = "attributeName")
+		WebElement attributeName;
+
+		@FindBy(name = "attributeValue")
+		WebElement attributeValue;
+
+		@FindBy(css = "input[type=\"submit\"]")
+		WebElement submit;
+
+		public Form(SearchContext context) {
+			PageFactory.initElements(new DefaultElementLocatorFactory(context), this);
+		}
+
+		public Form attributeName(String text) {
+			this.attributeName.sendKeys(text);
+			return this;
+		}
+
+		public Form attributeValue(String text) {
+			this.attributeValue.sendKeys(text);
+			return this;
+		}
+
+		public <T> T submit(Class<T> page) {
+			this.submit.click();
+			return PageFactory.initElements(HomePage.this.driver, page);
+		}
+
+	}
+
+	public static class Attribute {
+
+		@FindBy(xpath = ".//td[1]")
+		WebElement attributeName;
+
+		@FindBy(xpath = ".//td[2]")
+		WebElement attributeValue;
+
+		public Attribute(SearchContext context) {
+			PageFactory.initElements(new DefaultElementLocatorFactory(context), this);
+		}
+
+		/**
+		 * @return the attributeName
+		 */
+		public String getAttributeName() {
+			return this.attributeName.getText();
+		}
+
+		/**
+		 * @return the attributeValue
+		 */
+		public String getAttributeValue() {
+			return this.attributeValue.getText();
+		}
+
 	}
 
 }

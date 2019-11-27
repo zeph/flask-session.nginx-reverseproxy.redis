@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2017 the original author or authors.
+ * Copyright 2014-2019 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,29 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package sample;
 
-package sample.pages;
+import org.springframework.session.web.context.AbstractHttpSessionApplicationInitializer;
 
-import org.openqa.selenium.WebDriver;
+// @formatter:off
+// tag::class[]
+public class Initializer extends AbstractHttpSessionApplicationInitializer { // <1>
 
-/**
- * @author Eddú Meléndez
- */
-public class BasePage {
-
-	private WebDriver driver;
-
-	public BasePage(WebDriver driver) {
-		this.driver = driver;
-	}
-
-	public WebDriver getDriver() {
-		return this.driver;
-	}
-
-	public static void get(WebDriver driver, String get) {
-		String baseUrl = "http://localhost";
-		driver.get(baseUrl + get);
+	public Initializer() {
+		super(Config.class); // <2>
 	}
 
 }
+// end::class[]
+// @formatter:on
