@@ -1,5 +1,5 @@
 /*
- * Copyright 2014-2019 the original author or authors.
+ * Copyright 2014-2017 the original author or authors.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package sample;
 
-import javax.servlet.ServletContext;
+package sample.config;
 
-import org.h2.server.web.WebServlet;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import org.springframework.web.WebApplicationInitializer;
-
-public class H2ConsoleInitializer implements WebApplicationInitializer {
+@Configuration
+public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
-	public void onStartup(ServletContext servletContext) {
-		servletContext.addServlet("h2Console", new WebServlet()).addMapping("/h2-console/*");
+	public void addViewControllers(ViewControllerRegistry registry) {
+		registry.addViewController("/").setViewName("index");
 	}
 
 }
