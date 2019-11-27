@@ -1,2 +1,2 @@
 FROM jetty:latest
-ADD spring.war webapps/
+ADD build/libs/sample.war webapps/
