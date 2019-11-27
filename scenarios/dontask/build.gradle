@@ -20,6 +20,11 @@ repositories {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+configurations {
+	integrationTestCompile.extendsFrom testCompile
+	integrationTestRuntime.extendsFrom testRuntime
+}
+
 dependencies {
 	compile "org.springframework.boot:spring-boot-starter-web"
 	compile "org.springframework.session:spring-session-jdbc"
@@ -45,9 +50,10 @@ dependencies {
 
 	compile "javax.servlet:javax.servlet-api"
 
+	testCompile "org.springframework.boot:spring-boot-starter-test"
 	testCompile "org.assertj:assertj-core"
 	testCompile "org.junit.jupiter:junit-jupiter-api"
 	testRuntime "org.junit.jupiter:junit-jupiter-engine"
 
-	testCompile 'org.seleniumhq.selenium:htmlunit-driver:2.33.0'
+	integrationTestCompile 'org.seleniumhq.selenium:htmlunit-driver:2.33.0'
 }
