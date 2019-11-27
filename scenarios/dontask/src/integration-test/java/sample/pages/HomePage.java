@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package sample;
+package sample.pages;
+
+import java.util.Set;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -54,10 +54,10 @@ public class HomePage extends BasePage {
 		assertThat(cookies).extracting("name").doesNotContain(cookieName);
 	}
 
-	public HomePage logout() {
+	public LoginPage logout() {
 		WebElement logout = getDriver().findElement(By.cssSelector("input[type=\"submit\"]"));
 		logout.click();
-		return PageFactory.initElements(getDriver(), HomePage.class);
+		return PageFactory.initElements(getDriver(), LoginPage.class);
 	}
 
 }

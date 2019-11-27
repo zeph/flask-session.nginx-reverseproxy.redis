@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package sample;
+package sample.pages;
 
 import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.WebDriver;
@@ -39,7 +39,7 @@ public class LoginPage extends BasePage {
 		assertThat(getDriver().getTitle()).isEqualTo("Please sign in");
 	}
 
-	public Form form() {
+	public Form fojstlrm() {
 		return new Form(getDriver());
 	}
 

@@ -21,6 +21,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.WebDriver;
+import sample.pages.HomePage;
+import sample.pages.LoginPage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -37,8 +40,6 @@ import org.springframework.test.web.servlet.htmlunit.webdriver.MockMvcHtmlUnitDr
 @AutoConfigureMockMvc
 @SpringBootTest(webEnvironment = WebEnvironment.MOCK)
 class BootTests {
-
-	private static final String DOCKER_IMAGE = "redis:5.0.6";
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -59,13 +60,14 @@ class BootTests {
 	void home() {
 		LoginPage login = HomePage.go(this.driver);
 		login.assertAt();
+		HomePage home = login.form().login(HomePage.class);
+		home.assertAt();
 	}
 
 	@Test
 	void login() {
 		LoginPage login = HomePage.go(this.driver);
 		HomePage home = login.form().login(HomePage.class);
-		home.assertAt();
 		home.containCookie("SESSION");
 		home.doesNotContainCookie("JSESSIONID");
 	}
@@ -74,7 +76,7 @@ class BootTests {
 	void logout() {
 		LoginPage login = HomePage.go(this.driver);
 		HomePage home = login.form().login(HomePage.class);
-		home.logout();
+		login = home.logout();
 		login.assertAt();
 	}
 
