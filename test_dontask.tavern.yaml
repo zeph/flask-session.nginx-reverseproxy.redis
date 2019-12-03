@@ -3,46 +3,31 @@ test_name: request sessions
 
 # https://tavern.readthedocs.io/en/latest/examples.html
 stages:
-  - name: There is no session...
-
+  - name: 1st Access
     # 
     request:
-      url: "http://0.0.0.0:5000"
+      url: "http://0.0.0.0:5000/sample/login"
       method: GET
 
     # ...and the expected response code and body
     response:
-      status_code: 401
-      body:
-        "value": "not set"
+      cookies:
+        - JSESSIONID
   
-  - name: Let's get A session...
-
+  - name: Authenticating
     # 
     request:
-      url: "http://0.0.0.0:5000"
-      method: PUT
+      url: "http://0.0.0.0:5000/sample/login"
+      method: POST
+      cookies:
+        - JSESSIONID
+      data:
+        username: user
+        password: password
 
     # ...and the expected response code and body
     response:
-      status_code: 201
       cookies:
-        - session
-      body:
-        'ok'
-  
-  - name: There is A session...
-
-    # 
-    request:
-      url: "http://0.0.0.0:5000"
-      method: GET
-      cookies:
-        - session
-
-    # ...and the expected response code and body
-    response:
-      status_code: 200
-      body:
-        "value": "value"
+        - JSESSIONID
+      status_code: 302
   
