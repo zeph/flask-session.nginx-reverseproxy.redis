@@ -1,0 +1,48 @@
+---
+test_name: request sessions
+
+# https://tavern.readthedocs.io/en/latest/examples.html
+stages:
+  - name: There is no session...
+
+    # 
+    request:
+      url: "http://0.0.0.0:5000"
+      method: GET
+
+    # ...and the expected response code and body
+    response:
+      status_code: 401
+      body:
+        "value": "not set"
+  
+  - name: Let's get A session...
+
+    # 
+    request:
+      url: "http://0.0.0.0:5000"
+      method: PUT
+
+    # ...and the expected response code and body
+    response:
+      status_code: 201
+      cookies:
+        - session
+      body:
+        'ok'
+  
+  - name: There is A session...
+
+    # 
+    request:
+      url: "http://0.0.0.0:5000"
+      method: GET
+      cookies:
+        - session
+
+    # ...and the expected response code and body
+    response:
+      status_code: 200
+      body:
+        "value": "value"
+  
