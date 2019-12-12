@@ -16,5 +16,9 @@ function worker_id {
 
 for i in 1 2 3 4;
 do
-	echo "INSTANCE dontask_web_$i maps to <JSESSION>.worker$(worker_id $i)"
+	id = $(worker_id $i)
+	echo "INSTANCE dontask_web_$i maps to <JSESSION>.worker$id"
+	perl -pi -e 's/JSESSION$i/$id/g' nginx.conf
 done
+
+docker-compose nginx restart
