@@ -13,6 +13,10 @@ stages:
     response:
       cookies:
         - JSESSIONID
+      verify_response_with:
+        function: tavern.testutils.helpers:validate_regex
+        extra_kwargs:
+          expression: '<input name=\"_csrf\" type=\"hidden\" value=\".*\" />'
   
   - name: Authenticating
     # 
@@ -24,6 +28,7 @@ stages:
       data:
         username: user
         password: password
+        #_csrf: "{spring_security:s}"
 
     # ...and the expected response code and body
     response:
