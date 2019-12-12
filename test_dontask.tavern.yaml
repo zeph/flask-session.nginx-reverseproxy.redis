@@ -17,7 +17,12 @@ stages:
         function: tavern.testutils.helpers:validate_regex
         extra_kwargs:
           expression: '<input name=\"_csrf\" type=\"hidden\" value=\".*\" />'
-  
+      save:
+        $ext:
+          function: tavern.testutils.helpers:validate_regex
+          extra_kwargs:
+            expression: '<input name=\"_csrf\" type=\"hidden\" value=\"(?P<spring_security>.*)\" />'
+
   - name: Authenticating
     # 
     request:
@@ -28,7 +33,7 @@ stages:
       data:
         username: user
         password: password
-        #_csrf: "{spring_security:s}"
+        _csrf: "{regex.spring_security:s}"
 
     # ...and the expected response code and body
     response:
