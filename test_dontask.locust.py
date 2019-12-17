@@ -1,11 +1,13 @@
 from locust import HttpLocust, TaskSet, task
+from bs4 import BeautifulSoup
 
 class UserBehavior(TaskSet):
     def on_start(self):
         """ ok, we do NOT have a session """
-        with self.client.get("/", catch_response=True, name='not set') as response:
-            #print(response.content)
-            if response.status_code != 401:
+        with self.client.get("/sample/login", catch_response=True, name='not set') as response:
+            soup = BeautifulSoup(response.content)
+            print(soup.prettify())
+            if response.status_code != 200:
                 response.failure("Got wrong response")
             else:
                 response.success()
