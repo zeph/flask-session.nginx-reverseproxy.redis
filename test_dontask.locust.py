@@ -5,8 +5,8 @@ class UserBehavior(TaskSet):
     def on_start(self):
         """ ok, we do NOT have a session """
         with self.client.get("/sample/login", catch_response=True, name='not set') as response:
-            soup = BeautifulSoup(response.content)
-            print(soup.prettify())
+            soup = BeautifulSoup(response.content).find("input", attrs={"name": "_csrf"})
+            spring_security = soup['value']
             if response.status_code != 200:
                 response.failure("Got wrong response")
             else:
