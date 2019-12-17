@@ -16,7 +16,8 @@ class UserBehavior(TaskSet):
     def start_session(self):
         with self.client.post("/sample/login", {"username": "user", 
         "password": "password", "_csrf": self.spring_security}, catch_response=True) as response:
-            if response.status_code != 201:
+            if response.status_code != 200:
+                print(response.request.headers, response.headers)
                 response.failure("Got wrong response")
 
     @task(1)
